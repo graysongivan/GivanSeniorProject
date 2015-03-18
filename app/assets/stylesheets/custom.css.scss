@@ -1,0 +1,302 @@
+@import "bootstrap";
+
+/* universal */
+html {
+  overflow-y: scroll;
+}
+body {
+  padding-top: 60px;
+}
+section {
+  overflow: auto;
+}
+textarea {
+  resize: vertical;
+}
+.center {
+  text-align: center;
+}
+.center h1 {
+  margin-bottom: 10px;
+}
+div.hero-unit a {
+  color:#ffffff;
+}
+/* typography */
+p.logged_in_user {
+  margin-top: 6px;
+  color: white;
+}
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1;
+}
+h1 {
+  font-size: 3em;
+  letter-spacing: -2px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+h2 {
+  font-size: 1.2em;
+  letter-spacing: -1px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: normal;
+  color: #999;
+}
+p{
+font-size: 1.1em;
+  line-height: 1.7em;
+}
+/* header */
+#logo {
+  float: left;
+  margin-right: 10px;
+  font-size: 1.7em;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  padding-top: 9px;
+  font-weight: bold;
+  line-height: 1;
+  background-color: black;
+}
+
+#logo > div {
+  display: inline-block;
+}
+
+.navbar, .navbar-fixed-top, .navbar-inverse {
+  max-height: 70px !important;
+}
+
+#navbar > li {
+  display: inline-block;
+
+  a:hover {
+    color: white;
+    text-decoration: underline;    
+  }
+}
+
+#logo:hover {
+  color: white;
+  text-decoration: none;
+}
+/* footer */
+footer {
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid #eaeaea;
+  color: #999;
+}
+footer a {
+  color: #555;
+}
+footer a:hover {
+  color: #999;
+}
+footer small {
+  float: left;
+}
+footer ul {
+  float: right;
+  list-style: none;
+}
+footer ul li {
+  float: left;
+  margin-left: 10px;
+}
+
+/* misc */
+table {
+  max-height: 100%;
+  width: 100%;
+  table-layout: fixed;
+  border: 3px solid black;
+}
+
+thead, tbody, tr, td, th { display: block; }
+
+tr:after {
+  content: ' ';
+  display: block;
+  visibility: hidden;
+  clear: both;
+}
+
+thead th {
+  height: 30px;
+
+  /*text-align: left;*/
+}
+
+tbody {
+  max-height: 240px !important;
+  overflow-y: auto;
+}
+
+thead {
+  /* fallback */
+}
+
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+  border: none;
+}
+
+tr.no-comment {
+  display: none;
+}
+
+tbody td, thead th {
+  width: 25%;
+  float: left;
+}
+
+th, tr {
+  text-align: center;
+  width: 100%;
+  td {
+    font: 15px arial, serif;
+    position: relative;
+    text-align: center;
+    word-wrap: break-word;
+    
+    a:hover {
+      text-decoration: none;
+    }
+    img {
+      border-radius: 999px;
+    }
+    img:hover {
+      background-color: #FFD700;
+    }
+  }
+}
+tr.comment {
+  border: 1pt solid black;
+}
+thead tr {
+  background-color: #FFD700;
+  border: 1pt solid black;
+}
+
+.glyphicon-chevron-right:before {
+  content: none;
+}
+.glyphicon-chevron-left:before {
+  content: none;
+}
+
+#picture-carousel {
+  width: 100% !important;
+  height: 340px !important;
+}
+
+.carousel-inner > .item > img {
+  width: 100% !important;
+  height: 340px !important;
+  border-radius: 25px;
+}
+
+.carousel-control {
+  border-radius: 25px;
+}
+
+.pic-name {
+  color: #FFD700;
+  text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+#no-comment {
+  background: rgba(255, 215, 0, 0.4)!important;
+}
+
+.transDiv {
+  width: 100%;
+  border: 2px solid black;
+  border-radius: 25px;
+  background: rgba(0, 0, 0, 0.4)!important;
+}
+
+.pic-name {
+  display: none;
+}
+
+#picture-carousel:hover {
+  .pic-name {
+    display: block;
+  }
+}
+
+.carousel-fade {
+  .carousel-inner {
+    .item {
+      opacity: 0;
+      transition-property: opacity;
+    }
+
+    .active {
+      opacity: 1;
+    }
+
+    .active.left,
+    .active.right {
+      left: 0;
+      opacity: 0;
+      z-index: 1;
+    }
+
+    .next.left,
+    .prev.right {
+      opacity: 1;
+    }
+  }
+
+  .carousel-control {
+    z-index: 2;
+  }
+}
+
+#nav-buttons > li {
+  display: inline-block;
+}
+
+#signin > label, input {
+  display: inline-block;
+  margin: 1%;
+}
+
+.signinPic {
+  display: block;
+  max-height: 40%;
+  max-width: 40%;
+  border-radius: 25px;
+}
+
+.btn, .btn-secondary {
+  display: inline-block;
+  margin-top: 6px;
+}
+
+#hide > img {
+  float: right;
+  height: 15px !important;
+  width: 15px !important;
+  display: inline;
+}
+
+#show > img {
+  float: right;
+  height: 15px !important;
+  width: 15px !important;
+  display: none;
+}
+
+#links > a {
+  display: inline-block;
+}

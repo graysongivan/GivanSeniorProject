@@ -1,14 +1,88 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>GivanSeniorProject</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+	<head>
+		<title>Shopping Spree Solution | <%= yield(:title) %></title>
+		<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+		<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+		<%= csrf_meta_tags %>
+	</head>
+	<body>
+		<header class="navbar navbar-fixed-top navbar-inverse">
+			<div class="navbar-inner">
+				<div class="container">
+					<%= link_to "Shopping Spree Solution", root_path, id: "logo" %>
+					<nav>
+						<ul id="navbar" class="nav navbar-nav pull-right">
+							<% if user_signed_in? %>
+							<div id="nav-buttons">
+								<li>
+									<p class="logged_in_user">
+										Logged in as <strong><%= link_to current_user.email, edit_user_registration_path %></strong>.
+									</p>
+								</li>
+								|
+								<li>
+									<%= link_to "Sign out", destroy_user_session_path %>
+								</li>
+							</div>
+							<% else %>
+							<li>
+								<%= link_to "Sign up", new_user_registration_path %>
+							</li>
+							<li>
+								<%= link_to "Login", new_user_session_path %>
+							</li>
+							<% end %>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</header>
+		<div class="container">
+			<% if flash[:match] %>
+			<p id="match" class="alert alert-success" align="center">
+				<%= flash[:match] %>
+				<button id="hide" class="btn btn-secondary" style="display: inline-block; background: none; margin-bottom: 5%; float: right; font-size: 10px;" onclick="document.getElementById('match').hidden=true;">
+					<%= image_tag "uparrow.jpg" %>
+				</button>
+			</p>
 
-<%= yield %>
+			<% end %>
+			<div id="flash">
+				<% if notice %>
+				<p class="alert alert-success">
+					<%= notice %>
+				</p>
+				<% end %>
+				<% if alert %>
+				<p class="alert alert-danger">
+					<%= alert %>
+				</p>
+				<% end %>
+			</div>
+			<%= yield %>
+			<footer class="footer">
+			</footer>
+		</div>
+	</body>
 
-</body>
 </html>
+
+<!-- removes flash notification after 10 seconds -->
+<script type="text/javascript">
+	$(document).ready(function() {
+		setTimeout(function() {
+			$('#flash').remove();
+		}, 10000);
+	})
+</script>
+<!--
+<script>
+function hideMatch(elem) {
+elem.onclick(
+match = document.getElementById('match');
+match.hidden = true;
+)
+}
+</script> -->
+
