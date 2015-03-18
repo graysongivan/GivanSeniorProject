@@ -1,1 +1,28 @@
 <h1>Home</h1>
+
+<div style='width: 800px; margin: 0 auto;'>
+	<div id="map" style='width: 800px; height: 500px;'></div>
+</div>
+
+<script>
+	handler = Gmaps.build('Google');
+	handler.buildMap({
+		provider : {},
+		internal : {
+			id : 'map'
+		}
+	}, function() {
+		markers = handler.addMarkers([{
+			"lat" : 44.854679,
+			"lng" : -93.242880,
+			"picture" : {
+				"url" : "https://addons.cdn.mozilla.net/img/uploads/addon_icons/13/13028-64.png",
+				"width" : 36,
+				"height" : 36
+			},
+			"infowindow" : "Shopping Spree Solution!"
+		}]);
+		handler.bounds.extendWith(markers);
+		handler.fitMapToBounds();
+	}); 
+</script>
