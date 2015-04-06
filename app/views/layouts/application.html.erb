@@ -5,10 +5,10 @@
 		<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
 		<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 		<%= csrf_meta_tags %>
-		
-		<script src="//maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places" type="text/javascript"></script>
+
+		<script src="//maps.googleapis.com/maps/api/js?v=3.exp&signed_in=false&libraries=places" type="text/javascript"></script>
 		<!-- <script src='//google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.0.14/src/markerclusterer_packed.js' type='text/javascript'></script> -->
-		
+
 	</head>
 	<body>
 		<header class="navbar navbar-fixed-top navbar-inverse">
@@ -26,7 +26,7 @@
 								</li>
 								|
 								<li>
-									<%= link_to "Sign out", destroy_user_session_path %>
+									<%= link_to "Log out", destroy_session_path(current_user), :method => :delete %>
 								</li>
 							</div>
 							<% else %>
@@ -42,6 +42,7 @@
 				</div>
 			</div>
 		</header>
+		
 		<div class="container">
 			<div id="flash">
 				<% if notice %>
@@ -56,8 +57,7 @@
 				<% end %>
 			</div>
 			<%= yield %>
-			<footer class="footer">
-			</footer>
+			<footer class="footer"></footer>
 		</div>
 	</body>
 
