@@ -7,14 +7,15 @@
 		<%= csrf_meta_tags %>
 
 		<script src="//maps.googleapis.com/maps/api/js?v=3.exp&signed_in=false&libraries=places" type="text/javascript"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 		<!-- <script src='//google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.0.14/src/markerclusterer_packed.js' type='text/javascript'></script> -->
 
 	</head>
-	<body>
+	<body onload="initialize()">
 		<header class="navbar navbar-fixed-top navbar-inverse">
 			<div class="navbar-inner">
 				<div class="container">
-					<%= link_to "Shopping Spree Solution", root_path, id: "logo" %>
+					<%= link_to "Shopping Spree Solution", '/home', id: "logo" %>
 					<nav>
 						<ul id="navbar" class="nav navbar-nav pull-right">
 							<% if user_signed_in? %>
@@ -42,7 +43,7 @@
 				</div>
 			</div>
 		</header>
-		
+
 		<div class="container">
 			<div id="flash">
 				<% if notice %>

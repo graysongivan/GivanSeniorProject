@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
   
-  resources :comments
+  resources :products
   resources :comments
   root 'dashboard#home'
+  match '/home', to: 'dashboard#home', via: 'get'
+  get 'stores/new'
+
+  get 'stores/create'
   devise_for :users
 
   # The priority is based upon order of creation: first created -> highest priority.

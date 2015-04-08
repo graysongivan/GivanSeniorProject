@@ -1,0 +1,10 @@
+<div align="center" class="field">
+  <%= f.label :content %><br>
+  <%= f.text_area :content, maxlength: 140, size: "30x6" %>
+</div>
+<%= f.hidden_field :user_id, value: current_user.id %>
+<div align="center" class="field">
+	<%= f.label :store_id %>
+	<br>
+	<%= f.select :store_id, @store_options %>
+</div>
