@@ -1,0 +1,20 @@
+<div align="center" class="field">
+  <%= f.label :store_id %>
+	<br>
+	<%= f.select :store_id, @store_options %>
+</div>
+<%= f.hidden_field :user_id, value: current_user.id %>
+<div align="center" class="field">
+	<%= f.label :name %><br>
+    <%= f.text_field :name %>
+</div>
+
+<div align="center" class="field">
+	<%= f.label :price %><br>
+    <%= f.number_field :price %>
+</div>
+
+<div align="center" class="field">
+	<%= f.label :quantity %><br>
+    <%= f.number_field :quantity %>
+</div>
