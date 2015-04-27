@@ -58,8 +58,7 @@ font-size: 1.1em;
   letter-spacing: -1px;
   padding-top: 9px;
   font-weight: bold;
-  line-height: 1;
-  background-color: black;
+  line-height: 1;  
 }
 
 #logo > div {
@@ -72,11 +71,16 @@ font-size: 1.1em;
 
 #navbar > li {
   display: inline-block;
-
+  color: white;
   a:hover {
     color: white;
     text-decoration: underline;    
   }
+}
+
+#logo:visited {
+  color: white;
+  text-decoration: none;
 }
 
 #logo:hover {
@@ -148,9 +152,29 @@ tr.no-comment {
   display: none;
 }
 
-tbody td, thead th {
-  width: 25%;
-  float: left;
+#comments {
+  tbody td, thead th {
+    width: 25%;
+    float: left;
+    .edit_delete {
+      td, th {
+        width: 25% !important;
+        float: left;
+      }
+    }
+  }
+}
+#products {
+  tbody td, thead th {
+    width: 17%;
+    float: left;
+  }
+  .edit_delete {
+      td, th {
+        width: 25% !important;
+        float: left;
+      }
+    }
 }
 
 th, tr {

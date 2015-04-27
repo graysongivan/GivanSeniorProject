@@ -1,67 +1,61 @@
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>User</th>
-      <th>Store</th>
-      <th>Edit | Delete</th>
-    </tr>
-  </thead>
-  <tbody>
-  	<% @products = Product.all %>
-  	
-    <% @products.each do |product| %>
-    <% productUser = User.find(product.user_id) %>
-    <% store = Store.find(product.store_id) %>
-    <tr class="comment">
-      <td class="filterable-cell"><%= product.name %></td>
-      <td class="filterable-cell"><%= productUser.email %></td>
-      <td class="filterable-cell"><%= store.name %></td>
-      <% if productUser.id == current_user.id %>
-      <td class="filterable-cell">
-        <%= link_to(edit_product_path(product), 'data-target' => "#myProduct",
-  'data-toggle' => 'modal') do  %>
-        <%= image_tag "editIcon.jpg", height: "50% !important", width: "40% !important" %>
-        <% end %>
-        <div class="modal fade" id='<%= "myProduct" %>' tabindex="-1" role="dialog"
-             aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel" align="left">Edit Product</h4>
-              </div>
-              <% @product = Product.find(product.id) %>
-              <%= form_for @product do |f| %>
-              <div class="modal-body">
-                <%= render partial: 'products/edit', :locals => { f: f } %>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <%= f.submit "Save Product", class: "btn btn-primary" %>
-              </div>  
-              <% end %>
-            </div><!-- /.modal-content -->
-          </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-        <%= link_to(@product, method: :delete, data: {confirm: 'Are you sure?'}) do  %>
-        <%= image_tag "removeIcon.jpg", height: "50% !important", width: "40% !important" %>
-        <% end %>
-      </td>
-      <% else %>
-      <td class="filterable-cell">
-        <% if comment.created_at === comment.updated_at %>
-        <strong>Created On: </strong>
-        <%= comment.created_at.strftime("%b. %d, %Y") %>
-        <% else %>
-        <strong>Last Modified: </strong>
-        <%= comment.updated_at.strftime("%b. %d, %Y") %>
-        <% end %>
-      </td>
-      <% end %>
-    </tr>
-    <% end %>
+<table id="products" class="table table-striped">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Store</th>
+			<th>Price</th>
+			<th>Quantity</th>
+			<th style="width: 25% !important;">Edit | Delete</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @products = Product.all %>
 
-  </tbody>
+		<% @products.each do |product| %>
+		<% productUser = User.find(product.user_id) %>
+		<% store = Store.find(product.store_id) %>
+		<% if productUser.id == current_user.id %>
+		<tr class="comment">
+			<td class="filterable-cell"><%= product.name %></td>
+			<td class="filterable-cell"><%= store.name %></td>
+			<td class="filterable-cell"><%= number_to_currency(product.price) %></td>
+			<td class="filterable-cell"><%= product.quantity %></td>
+
+			<td style="width: 25% !important;" class="filterable-cell"> <%= link_to(edit_product_path(product), 'data-target' => "#myProduct",
+			'data-toggle' => 'modal') do  %>
+			<%= image_tag "editIcon.jpg", height: "50% !important", width: "40% !important" %>
+			<% end %>
+			<div class="modal fade" id='<%= "myProduct" %>' tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+								&times;
+							</button>
+							<h4 class="modal-title" id="myModalLabel" align="left">Edit Product</h4>
+						</div>
+						<% @product = Product.find(product.id) %>
+						<%= form_for @product do |f| %>
+						<div class="modal-body">
+							<%= render partial: 'products/edit', :locals => { f: f } %>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">
+								Cancel
+							</button>
+							<%= f.submit "Save Product", class: "btn btn-primary" %>
+						</div>
+						<% end %>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal-dialog -->
+			</div><!-- /.modal --> <%= link_to(@product, method: :delete, data: {confirm: 'Are you sure?'}) do  %>
+			<%= image_tag "removeIcon.jpg", height: "50% !important", width: "40% !important" %>
+			<% end %> </td>
+		</tr>
+		<% end %>
+		<% end %>
+
+	</tbody>
 
 </table>

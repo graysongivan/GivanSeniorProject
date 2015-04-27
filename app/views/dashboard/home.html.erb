@@ -152,25 +152,19 @@
 
 		var markers = [];
 		var mapProp = {
-		backgroundcolor : 'blue',
 		center : myCenter,
 		zoom : 17,
 		minZoom : 17,
 		mapTypeControl: true,
     mapTypeControlOptions: {
-        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-        position: google.maps.ControlPosition.BOTTOM_LEFT
+        style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
     },
     zoomControl: true,
     zoomControlOptions: {
-        style: google.maps.ZoomControlStyle.SMALL,
-        position: google.maps.ControlPosition.BOTTOM_RIGHT
+        style: google.maps.ZoomControlStyle.SMALL
     },
     scaleControl: true,
     streetViewControl: true,
-    streetViewControlOptions: {
-        position: google.maps.ControlPosition.BOTTOM_RIGHT
-    }
 	};
 	var map = new google.maps.Map(document.getElementById('map-canvas'), mapProp);
 
@@ -178,11 +172,11 @@
 
 	var homeControlDiv = document.createElement('div');
 	var homeControl = new HomeControl(homeControlDiv, map);
-	map.controls[google.maps.ControlPosition.BOTTOM_RIGHT].push(homeControlDiv);
+	map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(homeControlDiv);
 
 	var resetViewControlDiv = document.createElement('div');
 	var resetViewControl = new ResetViewControl(resetViewControlDiv, map);
-	map.controls[google.maps.ControlPosition.BOTTOM_RIGHT].push(resetViewControlDiv);
+	map.controls[google.maps.ControlPosition.LEFT_CENTER].push(resetViewControlDiv);
 
 	google.maps.event.addListener(map, 'center_changed', function() {
 		// Prevents map from being moved at max zoom level
@@ -204,7 +198,7 @@
 	// Create the search box and link it to the UI element.
 	var input = /** @type {HTMLInputElement} */(
 		document.getElementById('pac-input'));
-	map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+	map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
 
 	var searchBox = new google.maps.places.SearchBox(
 	/** @type {HTMLInputElement} */(input));
