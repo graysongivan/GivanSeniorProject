@@ -1,15 +1,18 @@
-<div class="container" style="width: 100%">
-<table id="products" class="table table-striped" style="width: inherit">
+<% @total = 0 %>
+<div class="container" style="width: 100%; margin-top: 5%;">
+<table id="products" class="table table-striped" style="width: inherit;">
 	<thead>
 		<tr>
 			<th>Name</th>
 			<th>Store</th>
 			<th>Price</th>
-			<th>Quantity</th>
-			<th>Edit | Delete</th>
+			<th>Qty</th>
+			<th>Edit</th>
+			<th>Delete</th>
 		</tr>
 	</thead>
 	<tbody>
+		
 		<% @products = Product.all %>
 
 		<% @products.each do |product| %>
@@ -21,11 +24,13 @@
 			<td><%= store.name %></td>
 			<td><%= number_to_currency(product.price) %></td>
 			<td><%= product.quantity %></td>
+			<% @total += product.price*product.quantity %>
 
-			<td> <%= link_to(edit_product_path(product), 'data-target' => "#myProduct",
+			<td align="center"> <%= link_to(edit_product_path(product), 'data-target' => "#myProduct",
 			'data-toggle' => 'modal') do  %>
-			<%= image_tag "editIcon.jpg", height: "50% !important", width: "40% !important", style: "max-height: 30px" %>
+			<i class="fa fa-pencil fa-2x center"></i>
 			<% end %>
+			</td>
 			<div class="modal fade" id='<%= "myProduct" %>' tabindex="-1" role="dialog"
 			aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
@@ -50,14 +55,27 @@
 						<% end %>
 					</div><!-- /.modal-content -->
 				</div><!-- /.modal-dialog -->
-			</div><!-- /.modal --> <%= link_to(@product, method: :delete, data: {confirm: 'Are you sure?'}) do  %>
-			<%= image_tag "removeIcon.jpg", height: "50% !important", width: "40% !important", style: "max-height: 30px" %>
+			</div><!-- /.modal -->
+			<td align="center">
+			<%= link_to(@product, method: :delete, data: {confirm: 'Are you sure?'}) do  %>
+			<i class="fa fa-trash fa-2x center"></i>
 			<% end %> </td>
 		</tr>
 		<% end %>
 		<% end %>
 
 	</tbody>
+	
+	<tfoot>
+		<tr>
+			<td><strong>Total:</strong></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td><strong><%= number_to_currency(@total) %></strong></td>
+		</tr>
+	</tfoot>
 
 </table>
 </div>

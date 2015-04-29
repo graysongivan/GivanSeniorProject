@@ -1,11 +1,12 @@
-<div class="container" style="width: 100%">
+<div class="container" style="width: 100%; margin-top: 5%;">
 <table id="comments" class="table table-striped" style="width: inherit">
   <thead>
     <tr>
       <th>Content</th>
       <th>User</th>
       <th>Store</th>
-      <th>Edit | Delete</th>
+      <th>Edit</th>
+      <th>Delete</th>
     </tr>
   </thead>
   <tbody>
@@ -18,11 +19,12 @@
       <td><%= commentUser.email %></td>
       <td><%= store.name %></td>
       <% if commentUser.id == current_user.id %>
-      <td>
+      <td align="center">
         <%= link_to(edit_comment_path(comment), 'data-target' => "#myCommentModal}",
   'data-toggle' => 'modal') do  %>
-        <%= image_tag "editIcon.jpg", height: "50% !important", width: "40% !important", style: "max-height: 30px" %>
+        <i class="fa fa-pencil fa-2x center"></i>
         <% end %>
+        </td>
         <div class="modal fade" id='<%= "myCommentModal" %>' tabindex="-1" role="dialog"
              aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog">
@@ -44,19 +46,21 @@
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
+        <td align="center">
         <%= link_to(@comment, method: :delete, data: {confirm: 'Are you sure?'}) do  %>
-        <%= image_tag "removeIcon.jpg", height: "50% !important", width: "40% !important", style: "max-height: 30px" %>
+        <i class="fa fa-trash fa-2x center"></i>
         <% end %>
       </td>
       <% else %>
       <td>
-        <% if comment.created_at === comment.updated_at %>
+        
         <strong>Created On: </strong>
         <%= comment.created_at.strftime("%b. %d, %Y") %>
-        <% else %>
+        </td>
+        <td>
         <strong>Last Modified: </strong>
         <%= comment.updated_at.strftime("%b. %d, %Y") %>
-        <% end %>
+        
       </td>
       <% end %>
     </tr>

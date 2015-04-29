@@ -1,0 +1,6 @@
+<div align="center" class="field">
+  <%= f.label :store_id %>
+	<br>
+	<%= f.select :store_id, @store_options %>
+</div>
+<%= f.hidden_field :user_id, value: current_user.id %>

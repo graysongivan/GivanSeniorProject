@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  resources :store_to_visits
   resources :products
   resources :comments
   root 'dashboard#home'

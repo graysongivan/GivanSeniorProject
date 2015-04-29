@@ -1,0 +1,66 @@
+<div class="container" style="width: 100%; margin-top: 5%;">
+<table id="itinerary" class="table table-striped" style="width: inherit">
+	<thead>
+		<tr>
+			<th>Store</th>
+			<th>Edit</th>
+			<th>Delete</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @storesToVisit = StoreToVisit.all %>
+
+		<% @storesToVisit.each do |storeToVisit| %>
+		<% storeToVisitUser = User.find(storeToVisit.user_id) %>
+		<% store = Store.find(storeToVisit.store_id) %>
+		<% if storeToVisitUser.id == current_user.id %>
+		<tr>
+			<td><%= store.name %></td>
+			<td align="center"> <%= link_to(edit_store_to_visit_path(storeToVisit), 'data-target' => "#myStoreToVisit",
+			'data-toggle' => 'modal') do  %>
+			<i class="fa fa-pencil fa-2x center"></i>
+			<% end %>
+			</td>
+			<div class="modal fade" id='<%= "myStoreToVisit" %>' tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+								&times;
+							</button>
+							<h4 class="modal-title" id="myModalLabel" align="left">Edit Store To Visit</h4>
+						</div>
+						<% @storeToVisit = StoreToVisit.find(storeToVisit.id) %>
+						<%= form_for @storeToVisit do |f| %>
+						<div class="modal-body">
+							<%= render partial: 'store_to_visits/edit', :locals => { f: f } %>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">
+								Cancel
+							</button>
+							<%= f.submit "Save Store To Visit", class: "btn btn-primary" %>
+						</div>
+						<% end %>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal-dialog -->
+			</div><!-- /.modal --> 
+			<td align="center">
+			<%= link_to(@storeToVisit, method: :delete, data: {confirm: 'Are you sure?'}) do  %>
+			<i class="fa fa-trash fa-2x center"></i>
+			<% end %> </td>
+		</tr>
+		<% end %>
+		<% end %>
+
+	</tbody>
+
+</table>
+</div>
+
+<script>
+$(document).ready(function(){
+    $('#itinerary').dataTable();
+});
+</script>

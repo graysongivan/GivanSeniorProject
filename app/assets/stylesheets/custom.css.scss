@@ -144,13 +144,13 @@ thead {
   /* fallback */
 }
 
-.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
-  border: none;
-}
+// .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+  // border: none;
+// }
 
-tr.no-comment {
-  display: none;
-}
+// tr.no-comment {
+  // display: none;
+// }
 
 // #comments {
   // tbody td, thead th {
@@ -178,29 +178,29 @@ tr.no-comment {
   // }
 // }
 
-th, tr {
-  text-align: center;
-  width: 100%;
-  td {
-    font: 15px arial, serif;
-    position: relative;
-    text-align: center;
-    word-wrap: break-word;
-    
-    a:hover {
-      text-decoration: none;
-    }
-    img {
-      border-radius: 999px;
-    }
-    img:hover {
-      background-color: #FFD700;
-    }
-  }
-}
-tr.comment {
-  border: 1pt solid black;
-}
+// th, tr {
+  // text-align: center;
+  // width: 100%;
+  // td {
+    // font: 15px arial, serif;
+    // position: relative;
+    // text-align: center;
+    // word-wrap: break-word;
+//     
+    // a:hover {
+      // text-decoration: none;
+    // }
+    // img {
+      // border-radius: 999px;
+    // }
+    // img:hover {
+      // background-color: #FFD700;
+    // }
+  // }
+// }
+// tr.comment {
+  // border: 1pt solid black;
+// }
 thead tr {
   background-color: #FFD700;
   border: 1pt solid black;
@@ -288,9 +288,9 @@ thead tr {
 // }
 
 #map-container {
-   margin: 0 auto;
+   // margin: 0 auto;
    height: 600px;
-   width: 700px;
+   width: 100%;
    border-radius: 16px 16px;
    border-color: #fff;
    border-style: solid;

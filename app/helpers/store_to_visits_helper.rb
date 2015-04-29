@@ -1,0 +1,2 @@
+module StoreToVisitsHelper
+end
