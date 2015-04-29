@@ -120,7 +120,7 @@ table {
   border: 3px solid black;
 }
 
-thead, tbody, tr, td, th { display: block; }
+// thead, tbody, tr, td, th { display: block; }
 
 tr:after {
   content: ' ';
@@ -152,30 +152,31 @@ tr.no-comment {
   display: none;
 }
 
-#comments {
-  tbody td, thead th {
-    width: 25%;
-    float: left;
-    .edit_delete {
-      td, th {
-        width: 25% !important;
-        float: left;
-      }
-    }
-  }
-}
-#products {
-  tbody td, thead th {
-    width: 17%;
-    float: left;
-  }
-  .edit_delete {
-      td, th {
-        width: 25% !important;
-        float: left;
-      }
-    }
-}
+// #comments {
+  // tbody td, thead th {
+    // width: 25%;
+    // float: left;
+  // }
+// }
+
+
+// #products {
+  // tbody td, thead th {
+    // width: 17%;
+    // float: left;
+  // }
+// }
+
+// .edit_delete {
+    // width: 25% !important;
+    // float: left;
+  // }
+
+// #myTable {
+  // tbody td, thead th {
+    // float: left;
+  // }
+// }
 
 th, tr {
   text-align: center;
@@ -301,6 +302,7 @@ thead tr {
  #map-canvas {
    height: 100%;
    width: 100%;
+   background-color: blue;
  }
 
 #nav-buttons > li {

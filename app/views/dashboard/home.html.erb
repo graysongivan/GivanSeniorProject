@@ -47,7 +47,7 @@
 	</div>
 </div>
 
-<div class="container-fluid">
+<div class="container">
 	<div class="row">
 		<div class="col-md-7">
 
@@ -157,7 +157,7 @@
 		minZoom : 17,
 		mapTypeControl: true,
     mapTypeControlOptions: {
-        style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR
     },
     zoomControl: true,
     zoomControlOptions: {
@@ -257,15 +257,9 @@
 	});
 	}
 
-	google.maps.event.addDomListener(window, 'load', initialize);
+	// google.maps.event.addDomListener(window, 'load', initialize);
 
 	// function bounds() {
 	// map.center.infowindow { content: map.getZoom(); }
 	// }
-</script>
-
-<script>
-	function myFunction() {
-		document.getElementById("myDialog").showModal();
-	}
 </script>

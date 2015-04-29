@@ -1,11 +1,12 @@
-<table id="products" class="table table-striped">
+<div class="container" style="width: 100%">
+<table id="products" class="table table-striped" style="width: inherit">
 	<thead>
 		<tr>
 			<th>Name</th>
 			<th>Store</th>
 			<th>Price</th>
 			<th>Quantity</th>
-			<th style="width: 25% !important;">Edit | Delete</th>
+			<th>Edit | Delete</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -15,15 +16,15 @@
 		<% productUser = User.find(product.user_id) %>
 		<% store = Store.find(product.store_id) %>
 		<% if productUser.id == current_user.id %>
-		<tr class="comment">
-			<td class="filterable-cell"><%= product.name %></td>
-			<td class="filterable-cell"><%= store.name %></td>
-			<td class="filterable-cell"><%= number_to_currency(product.price) %></td>
-			<td class="filterable-cell"><%= product.quantity %></td>
+		<tr>
+			<td><%= product.name %></td>
+			<td><%= store.name %></td>
+			<td><%= number_to_currency(product.price) %></td>
+			<td><%= product.quantity %></td>
 
-			<td style="width: 25% !important;" class="filterable-cell"> <%= link_to(edit_product_path(product), 'data-target' => "#myProduct",
+			<td> <%= link_to(edit_product_path(product), 'data-target' => "#myProduct",
 			'data-toggle' => 'modal') do  %>
-			<%= image_tag "editIcon.jpg", height: "50% !important", width: "40% !important" %>
+			<%= image_tag "editIcon.jpg", height: "50% !important", width: "40% !important", style: "max-height: 30px" %>
 			<% end %>
 			<div class="modal fade" id='<%= "myProduct" %>' tabindex="-1" role="dialog"
 			aria-labelledby="myModalLabel" aria-hidden="true">
@@ -50,7 +51,7 @@
 					</div><!-- /.modal-content -->
 				</div><!-- /.modal-dialog -->
 			</div><!-- /.modal --> <%= link_to(@product, method: :delete, data: {confirm: 'Are you sure?'}) do  %>
-			<%= image_tag "removeIcon.jpg", height: "50% !important", width: "40% !important" %>
+			<%= image_tag "removeIcon.jpg", height: "50% !important", width: "40% !important", style: "max-height: 30px" %>
 			<% end %> </td>
 		</tr>
 		<% end %>
@@ -59,3 +60,10 @@
 	</tbody>
 
 </table>
+</div>
+
+<script>
+$(document).ready(function(){
+    $('#products').dataTable();
+});
+</script>
