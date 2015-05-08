@@ -1,3 +1,163 @@
+<script>
+	function initialize() {
+		var myCenter = new google.maps.LatLng(44.854602, -93.242045);
+		var mapOptions = {
+			center : myCenter,
+			zoom : 17,
+			minZoom : 17,
+			mapTypeControl : true,
+			mapTypeControlOptions : {
+				style : google.maps.MapTypeControlStyle.HORIZONTAL_BAR
+			},
+			zoomControl : true,
+			zoomControlOptions : {
+				style : google.maps.ZoomControlStyle.SMALL
+			},
+			scaleControl : true,
+			streetViewControl : true
+		};
+		var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+		
+				// Add a Return to Center control that returns the user to the center of the Mall of America
+		function HomeControl(controlDiv, map) {
+			controlDiv.style.padding = '5px';
+			var controlUI = document.createElement('div');
+			controlUI.style.backgroundColor = 'yellow';
+			controlUI.style.border = '1px solid';
+			controlUI.style.cursor = 'pointer';
+			controlUI.style.textAlign = 'center';
+			controlUI.title = 'Set map to center of Mall of America';
+			controlDiv.appendChild(controlUI);
+			var controlText = document.createElement('div');
+			controlText.style.fontFamily = 'Calibri,sans-serif';
+			controlText.style.fontSize = '12px';
+			controlText.style.paddingLeft = '4px';
+			controlText.style.paddingRight = '4px';
+			controlText.innerHTML = '<b>Center Map<b>'
+			controlUI.appendChild(controlText);
+
+			// Setup click-event listener: simply set the map to London
+			google.maps.event.addDomListener(controlUI, 'click', function() {
+				map.setCenter(myCenter)
+			});
+		};
+
+		function ResetViewControl(controlDiv, map) {
+			controlDiv.style.padding = '5px';
+			var controlUI = document.createElement('div');
+			controlUI.style.backgroundColor = 'aqua';
+			controlUI.style.border = '1px solid';
+			controlUI.style.cursor = 'pointer';
+			controlUI.style.textAlign = 'center';
+			controlUI.title = 'Reset view to default view of the Mall of America';
+			controlDiv.appendChild(controlUI);
+			var controlText = document.createElement('div');
+			controlText.style.fontFamily = 'Calibri,sans-serif';
+			controlText.style.fontSize = '12px';
+			controlText.style.paddingLeft = '4px';
+			controlText.style.paddingRight = '4px';
+			controlText.innerHTML = '<b>Reset View<b>'
+			controlUI.appendChild(controlText);
+
+			// Setup click-event listener: simply set the map to the center of the Mall of America
+			google.maps.event.addDomListener(controlUI, 'click', function() {
+				map.setCenter(myCenter);
+				map.setZoom(17);
+			});
+		};
+
+		// Create a DIV to hold the control and call HomeControl()
+
+		var homeControlDiv = document.createElement('div');
+		var homeControl = new HomeControl(homeControlDiv, map);
+		map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(homeControlDiv);
+
+		var resetViewControlDiv = document.createElement('div');
+		var resetViewControl = new ResetViewControl(resetViewControlDiv, map);
+		map.controls[google.maps.ControlPosition.LEFT_CENTER].push(resetViewControlDiv);
+		
+		google.maps.event.addListener(map, 'center_changed', function() {
+			// Prevents map from being moved at max zoom level
+			if (map.zoom == 17) {
+				map.panTo(myCenter);
+			}
+		});
+
+		var input = /** @type {HTMLInputElement} */(
+			document.getElementById('pac-input'));
+
+		map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+		
+		var defaultBounds = new google.maps.LatLngBounds(
+		  new google.maps.LatLng(44.852373498451186, -93.24537630359652),
+		  new google.maps.LatLng(44.85683041531407, -93.23871369640352));
+		 
+
+		var autocomplete = new google.maps.places.Autocomplete(input, {
+			types : ['establishment'],
+			bounds : defaultBounds,
+			rankBy : 'DISTANCE'			
+		});
+
+		var infowindow = new google.maps.InfoWindow();
+		var marker = new google.maps.Marker({
+			map : map,
+			anchorPoint : new google.maps.Point(0, -29)
+		});
+
+		google.maps.event.addListener(autocomplete, 'place_changed', function() {
+			infowindow.close();
+			marker.setVisible(false);
+			var place = autocomplete.getPlace();
+			if (!place.geometry) {
+				window.alert("Autocomplete's returned place contains no geometry");
+				return;
+			}
+
+			// If the place has a geometry, then present it on a map.
+			if (autocomplete.getBounds().contains(place.geometry.location)) {
+				if (place.geometry.viewport) {
+					map.fitBounds(place.geometry.viewport);
+				} else {
+					map.setCenter(place.geometry.location);
+					map.setZoom(20);
+					// Why 20? Because it looks good.
+				}
+
+				marker.setIcon(/** @type {google.maps.Icon} */( {
+					url : place.icon,
+					size : new google.maps.Size(71, 71),
+					origin : new google.maps.Point(0, 0),
+					anchor : new google.maps.Point(17, 34),
+					scaledSize : new google.maps.Size(25, 25)
+				}));
+				marker.setPosition(place.geometry.location);
+				marker.setVisible(true);
+
+				var address = '';
+				if (place.address_components) {
+					address = [(place.address_components[0] && place.address_components[0].short_name || ''), (place.address_components[1] && place.address_components[1].short_name || ''), (place.address_components[2] && place.address_components[2].short_name || '')].join(' ');
+				}
+
+				infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+				infowindow.open(map, marker);
+			} else {
+				var searchField = document.getElementById("pac-input");
+				searchField.value = "";
+				
+				// window.alert(place.name + " could not be found within the bounds of the Mall of America" + map.getBounds().getNorthEast() + " " + map.getBounds().getSouthWest());
+				// return;
+			}
+		});
+		
+		// google.maps.event.addListener(map, 'bounds_changed', function() {
+			// var bounds = map.getBounds();
+			// autocomplete.setBounds(bounds);
+		// });
+	}
+
+</script>
+
 <% provide(:title, 'Home') %>
 
 <!-- Button trigger modal -->
@@ -14,8 +174,6 @@
 	<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#newComment">
 		New Comment
 	</button>
-
-	
 
 </div>
 
@@ -120,173 +278,3 @@
 		</div>
 	</div>
 </div>
-
-<script type="text/javascript">
-
-	function initialize() {
-		var myCenter = new google.maps.LatLng(44.854602, -93.242045);
-		var markers = [];
-		var mapProp = {
-			center : myCenter,
-			zoom : 17,
-			minZoom : 17,
-			mapTypeControl : true,
-			mapTypeControlOptions : {
-				style : google.maps.MapTypeControlStyle.HORIZONTAL_BAR
-			},
-			zoomControl : true,
-			zoomControlOptions : {
-				style : google.maps.ZoomControlStyle.SMALL
-			},
-			scaleControl : true,
-			streetViewControl : true
-		};
-		var map = new google.maps.Map(document.getElementById('map-canvas'), mapProp);
-		
-		
-
-	// Add a Return to Center control that returns the user to the center of the Mall of America
-	function HomeControl(controlDiv, map) {
-		controlDiv.style.padding = '5px';
-		var controlUI = document.createElement('div');
-		controlUI.style.backgroundColor = 'yellow';
-		controlUI.style.border = '1px solid';
-		controlUI.style.cursor = 'pointer';
-		controlUI.style.textAlign = 'center';
-		controlUI.title = 'Set map to center of Mall of America';
-		controlDiv.appendChild(controlUI);
-		var controlText = document.createElement('div');
-		controlText.style.fontFamily = 'Calibri,sans-serif';
-		controlText.style.fontSize = '12px';
-		controlText.style.paddingLeft = '4px';
-		controlText.style.paddingRight = '4px';
-		controlText.innerHTML = '<b>Center Map<b>'
-		controlUI.appendChild(controlText);
-
-		// Setup click-event listener: simply set the map to London
-		google.maps.event.addDomListener(controlUI, 'click', function() {
-			map.setCenter(myCenter)
-		});
-	};
-
-	function ResetViewControl(controlDiv, map) {
-		controlDiv.style.padding = '5px';
-		var controlUI = document.createElement('div');
-		controlUI.style.backgroundColor = 'aqua';
-		controlUI.style.border = '1px solid';
-		controlUI.style.cursor = 'pointer';
-		controlUI.style.textAlign = 'center';
-		controlUI.title = 'Reset view to default view of the Mall of America';
-		controlDiv.appendChild(controlUI);
-		var controlText = document.createElement('div');
-		controlText.style.fontFamily = 'Calibri,sans-serif';
-		controlText.style.fontSize = '12px';
-		controlText.style.paddingLeft = '4px';
-		controlText.style.paddingRight = '4px';
-		controlText.innerHTML = '<b>Reset View<b>'
-		controlUI.appendChild(controlText);
-
-		// Setup click-event listener: simply set the map to London
-		google.maps.event.addDomListener(controlUI, 'click', function() {
-			map.setCenter(myCenter);
-			map.setZoom(17);
-		});
-	};
-
-		// Create a DIV to hold the control and call HomeControl()
-
-		var homeControlDiv = document.createElement('div');
-		var homeControl = new HomeControl(homeControlDiv, map);
-		map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(homeControlDiv);
-
-		var resetViewControlDiv = document.createElement('div');
-		var resetViewControl = new ResetViewControl(resetViewControlDiv, map);
-		map.controls[google.maps.ControlPosition.LEFT_CENTER].push(resetViewControlDiv);
-
-		google.maps.event.addListener(map, 'center_changed', function() {
-			// Prevents map from being moved at max zoom level
-			if (map.zoom == 17) {
-				map.panTo(myCenter);
-			}
-		});
-
-		google.maps.event.addListener(map, 'zoom_changed', function() {
-			// Centers the map if you return to the max zoom level
-			if (map.zoom == 17) {
-				map.panTo(myCenter);
-			}
-		});
-
-		var defaultBounds = new google.maps.LatLngBounds(new google.maps.LatLng(44.852373498451186, -93.24626143257143), new google.maps.LatLng(44.85683041531407, -93.23782856742861));
-		map.fitBounds(defaultBounds);
-
-		// Create the search box and link it to the UI element.
-		var input = /** @type {HTMLInputElement} */(
-			document.getElementById('pac-input'));
-		map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
-
-		var searchBox = new google.maps.places.SearchBox(
-		/** @type {HTMLInputElement} */(input));
-
-		// [START region_getplaces]
-		// Listen for the event fired when the user selects an item from the
-		// pick list. Retrieve the matching places for that item.
-		google.maps.event.addListener(searchBox, 'places_changed', function() {
-			var places = searchBox.getPlaces();
-
-			if (places.length == 0) {
-				return;
-			}
-			for (var i = 0,
-			    marker; marker = markers[i]; i++) {
-				marker.setMap(null);
-			}
-
-			// For each place, get the icon, place name, and location.
-			markers = [];
-			var bounds = new google.maps.LatLngBounds();
-			for (var i = 0,
-			    place; place = places[i]; i++) {
-				var image = {
-					url : place.icon,
-					size : new google.maps.Size(71, 71),
-					origin : new google.maps.Point(0, 0),
-					anchor : new google.maps.Point(17, 34),
-					scaledSize : new google.maps.Size(25, 25)
-				};
-
-				// Create a marker for each place.
-				var marker = new google.maps.Marker({
-					map : map,
-					icon : image,
-					title : place.name,
-					position : place.geometry.location
-				});
-
-				markers.push(marker);
-
-				bounds.extend(place.geometry.location);
-				map.setZoom(20);
-				map.panTo(place.geometry.location);
-			}
-
-			// map.fitBounds(bounds);
-		});
-		// [END region_getplaces]
-
-		// Bias the SearchBox results towards places that are within the bounds of the
-		// current map's viewport.
-		google.maps.event.addListener(map, 'bounds_changed', function() {
-			var bounds = map.getBounds();
-			searchBox.setBounds(bounds);
-		});
-	}
-
-	// google.maps.event.addDomListener(window, 'load', initialize);
-
-	// function bounds() {
-	// map.center.infowindow { content: map.getZoom(); }
-	// }
-	
-	
-</script>

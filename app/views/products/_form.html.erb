@@ -1,35 +1,43 @@
 <%= form_for(@product) do |f| %>
-  <% if @product.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@product.errors.count, "error") %> prohibited this product from being saved:</h2>
+<% if @product.errors.any? %>
+<div id="error_explanation">
+	<h2><%= pluralize(@product.errors.count, "error") %> prohibited this product from being saved:</h2>
 
-      <ul>
-      <% @product.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div align="center" class="field">
-  <%= f.label :store_id %>
-	<br>
-	<%= f.select :store_id, @store_options %>
+	<ul>
+		<% @product.errors.full_messages.each do |message| %>
+		<li>
+			<%= message %>
+		</li>
+		<% end %>
+	</ul>
 </div>
-<%= f.hidden_field :user_id, value: current_user.id %>
-<div align="center" class="field">
-	<%= f.label :name %><br>
-    <%= f.text_field :name %>
-</div>
+<% end %>
 
 <div align="center" class="field">
-	<%= f.label :price %><br>
-    <%= f.number_field :price %>
-</div>
+	<div class="form-row">
+		<%= f.label :store_id %>
+		<%= f.select :store_id, @store_options, required: true %>
+	</div>
 
-<div align="center" class="field">
-	<%= f.label :quantity %><br>
-    <%= f.number_field :quantity %>
+	<%= f.hidden_field :user_id, value: current_user.id %>
+
+	<div class="form-row">
+		<%= f.label :name %>
+		<%= f.text_field :name, required: true %>
+	</div>
+
+	<div class="form-row">
+		<label for="product_price">Price</label>
+		<div class="input-group">
+			<span class="input-group-addon">$</span>
+			<input type="number" placeholder="ex: 50.00" min="0" step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" id="product_price" />
+		</div>
+	</div>
+
+	<div class="form-row">
+		<%= f.label :quantity %>
+		<%= f.number_field :quantity, required: true %>
+	</div>
 </div>
 <div class="modal-footer actions">
 	<button type="button" class="btn btn-default" data-dismiss="modal">

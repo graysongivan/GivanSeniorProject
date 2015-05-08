@@ -14,14 +14,18 @@
 <% end %>
 
 <div align="center" class="field">
-  <%= f.label :content %><br>
-  <%= f.text_area :content, maxlength: 140, size: "30x6" %>
-</div>
-<%= f.hidden_field :user_id, value: current_user.id %>
-<div align="center" class="field">
-	<%= f.label :store_id %>
-	<br>
-	<%= f.select :store_id, @store_options %>
+	<div class="form-row">
+		<%= f.label :content %>
+		<br />
+		<%= f.text_area :content, maxlength: 140, size: "30x6", required: true %>
+	</div>
+
+	<%= f.hidden_field :user_id, value: current_user.id %>
+	<div class="form-row">
+		<%= f.label :store_id %>
+		<br>
+		<%= f.select :store_id, @store_options, required: true %>
+	</div>
 </div>
 <div class="modal-footer actions">
 	<button type="button" class="btn btn-default" data-dismiss="modal">

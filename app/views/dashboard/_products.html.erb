@@ -1,87 +1,81 @@
 <% @total = 0 %>
 <div class="container" style="width: 100%; margin-top: 5%;">
-<table id="products" class="table table-striped" style="width: inherit;">
-	<thead>
-		<tr>
-			<th>Name</th>
-			<th>Store</th>
-			<th>Price</th>
-			<th>Qty</th>
-			<th>Edit</th>
-			<th>Delete</th>
-		</tr>
-	</thead>
-	<tbody>
-		
-		<% @products = Product.all %>
+	<table id="products" class="table table-striped" style="width: inherit;">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Store</th>
+				<th>Price</th>
+				<th>Qty</th>
+				<th>Edit</th>
+				<th>Done</th>
+			</tr>
+		</thead>
+		<tbody>
 
-		<% @products.each do |product| %>
-		<% productUser = User.find(product.user_id) %>
-		<% store = Store.find(product.store_id) %>
-		<% if productUser.id == current_user.id %>
-		<tr>
-			<td><%= product.name %></td>
-			<td><%= store.name %></td>
-			<td><%= number_to_currency(product.price) %></td>
-			<td><%= product.quantity %></td>
-			<% @total += product.price*product.quantity %>
+			<% @products = Product.all %>
 
-			<td align="center"> <%= link_to(edit_product_path(product), 'data-target' => "#myProduct",
-			'data-toggle' => 'modal') do  %>
-			<i class="fa fa-pencil fa-2x center"></i>
+			<% @products.each do |product| %>
+			<% productUser = User.find(product.user_id) %>
+			<% store = Store.find(product.store_id) %>
+			<% if productUser.id == current_user.id %>
+			<tr>
+				<td><%= product.name %></td>
+				<td><%= store.name %></td>
+				<td><%= number_to_currency(product.price) %></td>
+				<td><%= product.quantity %></td>
+				<% @total += product.price*product.quantity %>
+
+				<td align="center"> <%= link_to(edit_product_path(product), 'data-target' => "#myProduct",
+				'data-toggle' => 'modal') do  %> <i class="fa fa-pencil fa-2x center"></i> <% end %> </td>
+				<div class="modal fade" id='<%= "myProduct" %>' tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+									&times;
+								</button>
+								<h4 class="modal-title" id="myModalLabel" align="left">Edit Product</h4>
+							</div>
+							<% @product = Product.find(product.id) %>
+							<%= form_for @product do |f| %>
+							<div class="modal-body">
+								<%= render partial: 'products/edit', :locals => { f: f } %>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">
+									Cancel
+								</button>
+								<%= f.submit "Save Product", class: "btn btn-primary" %>
+							</div>
+							<% end %>
+						</div><!-- /.modal-content -->
+					</div><!-- /.modal-dialog -->
+				</div><!-- /.modal -->
+				<td align="center"> <%= link_to(@product, method: :delete, data: {confirm: 'Are you sure?'}) do  %> <i class="fa fa-check fa-2x center"></i> <% end %> </td>
+			</tr>
 			<% end %>
-			</td>
-			<div class="modal fade" id='<%= "myProduct" %>' tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-								&times;
-							</button>
-							<h4 class="modal-title" id="myModalLabel" align="left">Edit Product</h4>
-						</div>
-						<% @product = Product.find(product.id) %>
-						<%= form_for @product do |f| %>
-						<div class="modal-body">
-							<%= render partial: 'products/edit', :locals => { f: f } %>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">
-								Cancel
-							</button>
-							<%= f.submit "Save Product", class: "btn btn-primary" %>
-						</div>
-						<% end %>
-					</div><!-- /.modal-content -->
-				</div><!-- /.modal-dialog -->
-			</div><!-- /.modal -->
-			<td align="center">
-			<%= link_to(@product, method: :delete, data: {confirm: 'Are you sure?'}) do  %>
-			<i class="fa fa-trash fa-2x center"></i>
-			<% end %> </td>
-		</tr>
-		<% end %>
-		<% end %>
+			<% end %>
 
-	</tbody>
-	
-	<tfoot>
-		<tr>
-			<td><strong>Total:</strong></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td><strong><%= number_to_currency(@total) %></strong></td>
-		</tr>
-	</tfoot>
+		</tbody>
 
-</table>
+		<tfoot>
+			<tr>
+				<td><strong>Total:</strong></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td><strong><%= number_to_currency(@total) %></strong></td>
+			</tr>
+		</tfoot>
+
+	</table>
 </div>
 
 <script>
-$(document).ready(function(){
-    $('#products').dataTable();
-});
+	$(document).ready(function() {
+		$('#products').DataTable();
+	}); 
 </script>
